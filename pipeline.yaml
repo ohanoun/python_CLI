@@ -1,0 +1,48 @@
+trigger:
+  enabled: false
+pool:
+  vmImage: ubuntu-16.04
+variables:
+- name: nlw_token
+  value: 0khM5QANVu0rn0BNwRQInGtJ
+- name: PYTHONUNBUFFERED
+  value: 1
+stages:
+- stage: __default
+  jobs:
+  - job: RunLoadTest
+    displayName: Run NeoLoad Test from Azure Devops
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: 3.8
+    - task: Bash@3
+      displayName: Install NeoLoad CLI
+      continueOnError: false
+      inputs:
+        targetType: inline
+        script: >
+          pip install neoload
+    - task: Bash@3
+      displayName: Run the NeoLoad test
+      continueOnError: true
+      inputs:
+        targetType: inline
+        script: >
+          neoload login --url http://dockerps4.neotys.com/ $(nlw_token)
+
+          neoload run --name "https://github.com/ohanoun/neoload-as-code-demo/blob/master/zip/API_TEST.zip $(Build.BuildNumber)" --description "Azure example with meta; $(Build.BuildUri)" "Azure Devops CI"
+    - task: Bash@3
+      displayName: get the junits SLA
+      continueOnError: true
+      inputs:
+        targetType: inline
+        script: >
+          neoload test-results --junit-file $(Common.TestResultsDirectory)/neoload-slas.xml junitsla
+    - task: PublishTestResults@2
+      displayName: publish test results
+      inputs:
+        testResultsFormat: JUnit
+        testResultsFiles: $(Common.TestResultsDirectory)/neoload-slas.xml
+        failTaskOnFailedTests: true
+
