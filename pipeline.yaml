@@ -27,7 +27,7 @@ stages:
       inputs:
         targetType: inline
         script: >
-          neoload login --url http://dockerps4.neotys.com/ $(nlw_token)
+          neoload login --url http://dockerps4.neotys.com:8081/ $(nlw_token)
 
           neoload run --name "https://github.com/ohanoun/neoload-as-code-demo/blob/master/zip/API_TEST.zip $(Build.BuildNumber)" --description "Azure example with meta; $(Build.BuildUri)" "Azure Devops CI"
     - task: Bash@3
