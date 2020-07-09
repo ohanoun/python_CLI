@@ -29,7 +29,7 @@ stages:
         script: >
           neoload login --url http://dockerps4.neotys.com:8081/ $(nlw_token)
 
-          neoload run --name "https://github.com/ohanoun/python_CLI/blob/master/python.zip $(Build.BuildNumber)" --description "Azure example with meta; $(Build.BuildUri)" "TEST_FROM_PYTHON"
+          neoload run --name "Azure CI version $(Build.BuildNumber)" --description "Azure example with meta; $(Build.BuildUri)" "TEST_FROM_PYTHON"
     - task: Bash@3
       displayName: get the junits SLA
       continueOnError: true
