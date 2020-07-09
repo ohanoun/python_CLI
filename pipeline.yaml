@@ -27,7 +27,7 @@ stages:
       inputs:
         targetType: inline
         script: >
-          neoload login --url http://dockerps4.neotys.com:8081/ $(nlw_token)
+          neoload login $(nlw_token)
 
           neoload run --name "Azure CI version $(Build.BuildNumber)" --description "Azure example with meta; $(Build.BuildUri)" "AZURE_PYTHON"
     - task: Bash@3
