@@ -2,7 +2,7 @@ pool:
   vmImage: ubuntu-16.04
 variables:
 - name: nlw_token
-  value: 6953114f33e88c5cea935c117d88d5928f53db0c956844c2
+  value: <YOUR_NLW_TOKEN>
 - name: PYTHONUNBUFFERED
   value: 1
 stages:
